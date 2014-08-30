@@ -4,13 +4,6 @@
 var scope = '';
 var resolverApp = angular.module('resolverApp', ['ngRoute', 'LocalStorageModule']);
 
-resolverApp.run(function($http, localStorageService) {
-    var username = localStorageService.get('JiraCreds').username;
-    var password = localStorageService.get('JiraCreds').password;
-    $http.defaults.headers.common.Authorization = 'Basic ' +btoa(username + ":" + password);
-});
-
-
 resolverApp.config(function ($routeProvider){
     $routeProvider
         .when('/settings', {
@@ -45,7 +38,8 @@ resolverApp.factory('JiraIssueService', function($http, localStorageService) {
 
         var promise =  $http({
             method: "GET",
-            url: f.url
+            url: f.url,
+            headers: {'Authorization' : 'Basic ' +btoa(f.username + ":" + f.password)}
         });
 
         promise.success(function(response){
@@ -60,15 +54,39 @@ resolverApp.factory('JiraIssueService', function($http, localStorageService) {
         return promise;
     };
 
+    f.resolve_issue = function (){
+        myApp.showIndicator();
+
+        var promise =  $http({
+            method: "GET",
+            url: f.url,
+            headers: {'Authorization' : 'Basic ' +btoa(f.username + ":" + f.password)}
+        });
+
+        promise.success(function(response){
+            myApp.hideIndicator();
+        });
+
+        promise.error(function(response){
+            myApp.hideIndicator();
+            myApp.alert('Unable to fetch data', ['Invalid']);
+        });
+
+        return promise;
+    };
+
+
     return f;
 });
 
 resolverApp.controller('JiraController', function($scope, localStorageService, JiraIssueService) {
+    $scope.head_name = "Jira Issues"
     scope = $scope;
     $scope.avatar = localStorageService.get('JiraCreds').gravatar;
 
     JiraIssueService.get_issues().then(function(response){
         $scope.issues = response.data.issues;
+        $scope.head_name = $scope.issues[0].fields.assignee.displayName + "'s Jira Issues"
     })
 });
 
@@ -91,20 +109,22 @@ resolverApp.controller('SettingController', function($scope, localStorageService
 
     $scope.addJiraCredentials = function(){
         localStorageService.remove('JiraCreds');
-        $scope.JiraCreds = {'username': $scope.j_username,
+        var JiraCreds = {'username': $scope.j_username,
                             'password':$scope.j_password,
                             'host' : stripTrailingSlash($scope.j_host)
                             };
-        var url = "http://127.0.0.1:8000/"+$scope.JiraCreds.host +"/rest/api/latest/myself";
+        var url = "http://127.0.0.1:8000/"+JiraCreds.host +"/rest/api/latest/myself";
         myApp.showIndicator();
         $http({
             method: "GET",
-            url: url
+            url: url,
+            headers: {'Authorization' : 'Basic ' +btoa(JiraCreds.username + ":" + JiraCreds.password)}
 
         }).success(function(data, status, headers, config) {
             var gt = 'http://www.gravatar.com/avatar/' + CryptoJS.MD5(data.emailAddress);
-            $scope.JiraCreds['gravatar'] = gt;
-            localStorageService.set('JiraCreds', $scope.JiraCreds);
+            JiraCreds['gravatar'] = gt;
+            localStorageService.remove('JiraCreds');
+            localStorageService.set('JiraCreds', JiraCreds);
             myApp.alert('Welcome ' + data.displayName , ['Success']);
             myApp.hideIndicator();
         }).error(function(data, status, headers, config) {

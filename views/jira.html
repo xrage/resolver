@@ -4,7 +4,7 @@
             <div class="left">
                 <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
             </div>
-            <div class="center sliding contacts-list-header">Jira Issues</div>
+            <div class="center sliding contacts-list-header">{{head_name}}</div>
             <div class="right contact-add-link">
                 <a href="#" class="link icon-only"><i class="icon icon-plus">+</i></a>
             </div>
@@ -44,13 +44,19 @@
                     <div class="item-inner">
                         <div class="item-header">
                             <div class="avatar">
-                                <img data-avatarid="02" src="{{avatar}}">
+                                <img data-avatarid="02" src="{{issue.fields.reporter.avatarUrls.32x32}}">
                             </div>
+
                             <div class="detail">
-                                <p class="nickname">{{issue.fields.assignee.name}}</p>
-                                <p data-time="1404783664" class="create-time">{{issue.fields.duedate}}</p>
+                                <p class="nickname">By : {{issue.fields.reporter.displayName}}</p>
+                                <p class="create-time">Created on: {{issue.fields.created | date : format : timezone}}</p>
+                                <p class="create-time">Due: {{issue.fields.duedate | date : format : timezone}}</p>
                             </div>
                         </div>
+
+                        <!--<div class="avatar right_link">-->
+                            <!--<img data-avatarid="02" src="{{issue.fields.issuetype.iconUrl}}">-->
+                        <!--</div>-->
 
                         <div class="click-content">
 
