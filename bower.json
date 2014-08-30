@@ -1,0 +1,35 @@
+{
+  "name": "resolver",
+  "version": "0.0.0",
+  "authors": [
+    "xrage <dkverma.vit@gmail.com>"
+  ],
+  "description": "angular based jira and basecamp client",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "jira",
+    "basecamp",
+    "task",
+    "resolve",
+    "todo"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.23",
+    "angular-route": "~1.2.23",
+    "cordova": "~3.4.0",
+    "angular-local-storage": "~0.0.7"
+  }
+}

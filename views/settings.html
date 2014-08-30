@@ -1,0 +1,97 @@
+<div class="view view-main navbar-fixed">
+    <div class="navbar theme-white">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+            </div>
+            <div class="center sliding contacts-list-header">Basecamp Issues</div>
+            <div class="right contact-add-link">
+                <a href="#" class="link icon-only"><i class="icon icon-plus">+</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="pages">
+        <div data-page="settings" class="page">
+            <div class="page-content">
+
+                <div class="content-block-title">Jira
+                    <a ng-click="addJiraCredentials()" ng-class="{disabled: j_validated()}"
+                       class="link right_link">Save</a>
+                </div>
+                <div class="list-block">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Username</div>
+                                    <div class="item-input">
+                                        <input type="text" name="name" ng-model="j_username" ng-required="required"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Password</div>
+                                    <div class="item-input">
+                                        <input type="password" name="password" ng-model="j_password"
+                                               ng-required="required" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Host</div>
+                                    <div class="item-input">
+                                        <input type="url" name="host" ng-model="j_host" ng-required="required" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="content-block-title">Basecamp</div>
+                <div class="list-block">
+                    <ul>
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Username</div>
+                                    <div class="item-input">
+                                        <input type="text" name="name" ng-model="Basecamp.username"
+                                               ng-required="required" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">Password</div>
+                                    <div class="item-input">
+                                        <input type="password" name="password" ng-model="Basecamp.password"
+                                               ng-required="required" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

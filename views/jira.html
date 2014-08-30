@@ -1,0 +1,86 @@
+<div class="view view-main navbar-fixed">
+    <div class="navbar theme-white">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+            </div>
+            <div class="center sliding contacts-list-header">Jira Issues</div>
+            <div class="right contact-add-link">
+                <a href="#" class="link icon-only"><i class="icon icon-plus">+</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="pages">
+        <div data-page="list" class="page">
+            <!-- Search bar -->
+            <form class="searchbar" data-search-list=".contacts-list" data-search-in=".item-title">
+                <div class="searchbar-input">
+                    <input type="search" placeholder="Search" ng-model="searchText">
+                    <a href="#" class="searchbar-clear"></a>
+                </div>
+                <a href="#" class="searchbar-cancel">Issues</a>
+            </form>
+
+            <!-- Search bar overlay-->
+            <div class="searchbar-overlay"></div>
+
+            <div class="page-content">
+                <div class="list-block media-list contacts-list searchbar-found">
+                    <div class="list-group">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div class="content-block searchbar-not-found">
+                    Nothing found
+                </div>
+
+
+
+                <div class="list-block media-list">
+                <div class="load-result" style="opacity: 0; transition: 1000ms; -webkit-transition: 1000ms;">Nothing loaded</div>
+                <ul class="time-line-content" ng-repeat="issue in issues | filter:searchText">
+
+                <li data-id="47" data-mid="" class="item-content card-content">
+                    <div class="item-inner">
+                        <div class="item-header">
+                            <div class="avatar">
+                                <img data-avatarid="02" src="{{avatar}}">
+                            </div>
+                            <div class="detail">
+                                <p class="nickname">{{issue.fields.assignee.name}}</p>
+                                <p data-time="1404783664" class="create-time">{{issue.fields.duedate}}</p>
+                            </div>
+                        </div>
+
+                        <div class="click-content">
+
+                            <div class="item-subtitle">
+                                {{issue.fields.summary}}
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="item-tools">
+                            <ul>
+                                <li><a href="#"><i class="icon ion-ios7-checkmark-outline"></i><span class="text">Resolve</span></a></li>
+                                <li class="tool-line"></li>
+                                <li><a href="page/item.html?id=47"><i class="icon ion-ios7-close-outline"></i><span class="text">Close</span></a></li>
+                                <li class="tool-line"></li>
+                                <li><a href="#"><i class="icon ion-ios7-trash-outline"></i><span class="text">Delete</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </li>
+
+                </ul>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

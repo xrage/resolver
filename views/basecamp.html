@@ -1,0 +1,39 @@
+<div class="view view-main navbar-fixed">
+    <div class="navbar theme-white">
+        <div class="navbar-inner">
+            <div class="left">
+                <a href="#" class="link icon-only open-panel"><i class="icon icon-bars"></i></a>
+            </div>
+            <div class="center sliding contacts-list-header">Basecamp Issues</div>
+            <div class="right contact-add-link">
+                <a href="#" class="link icon-only"><i class="icon icon-plus">+</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="pages">
+        <div data-page="list" class="page">
+            <!-- Search bar -->
+            <form class="searchbar" data-search-list=".contacts-list" data-search-in=".item-title">
+                <div class="searchbar-input">
+                    <input type="search" placeholder="Search">
+                    <a href="#" class="searchbar-clear"></a>
+                </div>
+                <a href="#" class="searchbar-cancel">Issues</a>
+            </form>
+
+            <!-- Search bar overlay-->
+            <div class="searchbar-overlay"></div>
+
+            <div class="page-content">
+                <div class="list-block media-list contacts-list searchbar-found">
+                    <div class="list-group">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div class="content-block searchbar-not-found">
+                    Nothing found
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
