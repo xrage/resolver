@@ -21,3 +21,14 @@ function stripTrailingSlash(str) {
     return str;
 }
 
+function get_resolved_t_id(trans){
+    for (i = 0; i < trans.length; i++) {
+        if (trans[i].name == "Resolve Issue")
+            {
+                break;
+            }
+
+    }
+    return trans[i].id
+
+}

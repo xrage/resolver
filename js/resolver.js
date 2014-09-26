@@ -54,25 +54,49 @@ resolverApp.factory('JiraIssueService', function($http, localStorageService) {
         return promise;
     };
 
-    f.resolve_issue = function (){
+    f.transition = function (issue_id){
         myApp.showIndicator();
-
-        var promise =  $http({
+        f.turl = "http://127.0.0.1:8000/"+ f.host +"/rest/api/latest/issue/"+issue_id+"/transitions?expand=transitions.fields";
+            var promise =  $http({
             method: "GET",
-            url: f.url,
+            url: f.turl,
             headers: {'Authorization' : 'Basic ' +btoa(f.username + ":" + f.password)}
-        });
-
-        promise.success(function(response){
-            myApp.hideIndicator();
         });
 
         promise.error(function(response){
             myApp.hideIndicator();
-            myApp.alert('Unable to fetch data', ['Invalid']);
+            myApp.alert('Unable to fetch transition data', ['Invalid']);
         });
 
         return promise;
+    };
+
+    f.resolve_issue = function(t_response){
+        f.id = get_resolved_t_id(t_response.data.transitions);
+        f.r_url = f.turl + "/transitionId="+ f.id;
+        data = {
+            transition : {
+                id :f.id
+            }
+        };
+
+        var promise_res =  $http({
+            method: "POST",
+            url: f.r_url,
+            data: data,
+            headers: {'Authorization' : 'Basic ' +btoa(f.username + ":" + f.password),'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        promise_res.success(function(resp){
+            myApp.hideIndicator();
+        });
+
+        promise_res.error(function(resp){
+            myApp.alert('Unable process request', ['Invalid']);
+            myApp.hideIndicator();
+        });
+
+       return promise_res;
     };
 
 
@@ -80,14 +104,28 @@ resolverApp.factory('JiraIssueService', function($http, localStorageService) {
 });
 
 resolverApp.controller('JiraController', function($scope, localStorageService, JiraIssueService) {
-    $scope.head_name = "Jira Issues"
+    $scope.head_name = "Jira Issues";
     scope = $scope;
     $scope.avatar = localStorageService.get('JiraCreds').gravatar;
 
     JiraIssueService.get_issues().then(function(response){
         $scope.issues = response.data.issues;
-        $scope.head_name = $scope.issues[0].fields.assignee.displayName + "'s Jira Issues"
-    })
+        if ($scope.issues.length>0) {
+            $scope.head_name = $scope.issues[0].fields.assignee.displayName + "'s Jira Issues"
+        }
+        else{
+            $scope.head_name = "No Issue Found"
+        }
+    });
+
+    $scope.res_issue = function(issue_id){
+        JiraIssueService.transition(issue_id).then(function(t_response){
+                JiraIssueService.resolve_issue(t_response).then(function(r_response){
+                    console.log(r_response.status)
+                })
+        });
+    }
+
 });
 
 
